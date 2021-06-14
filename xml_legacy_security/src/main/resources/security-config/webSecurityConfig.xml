@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<http use-expressions="true">
+		<intercept-url pattern="/admin/**"
+			access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/anonymous*"
+			access="isAnonymous()" />
+		<intercept-url pattern="/login" access="permitAll" />
+		<intercept-url pattern="/register" access="permitAll" />
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+
+		<csrf disabled="true" />
+
+		<form-login login-page="/login"
+			login-processing-url="/perform_login" default-target-url="/homepage"
+			always-use-default-target="true" />
+
+		<logout logout-url="/perform_logout"
+			delete-cookies="JSESSIONID" />
+
+	</http>
+
+	<authentication-manager>
+		<authentication-provider>
+			<user-service>
+				<user name="admin" password="{noop}admin" authorities="ROLE_ADMIN" />
+				<user name="user1" password="{noop}1234" authorities="ROLE_USER"/>
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+</beans:beans>

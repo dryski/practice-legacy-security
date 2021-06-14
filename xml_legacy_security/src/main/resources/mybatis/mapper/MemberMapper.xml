@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cen.sec.dao.MemberMapper">
+
+	<resultMap type="com.cen.sec.domain.Member" id="memberBase">
+		<id column="id" property="id" />
+		<result column="username" property="username" />
+		<result column="password" property="password" />
+		<result column="name" property="name" />
+		<result column="email" property="email" />
+	</resultMap>
+
+	<select id="selectAllMember" resultMap="memberBase">
+		select * from sec_member
+	</select>
+	
+	<insert id="insertMember" parameterType="com.cen.sec.domain.Member">
+		<selectKey keyProperty="id" resultType="INTEGER" order="BEFORE">
+			SELECT sec_member_id.NEXTVAL FROM SYS.DUAL
+		</selectKey>
+		insert into sec_member values (#{id}, #{username}, #{password}, #{name}, #{email})
+	</insert>
+	
+</mapper>

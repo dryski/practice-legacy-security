@@ -24,6 +24,6 @@ public class AppInitializer implements WebApplicationInitializer{
 		appServlet.addMapping("/");
 		
 		servletContext.addFilter("securityFilter", new DelegatingFilterProxy("springSecurityFilterChain"))
-		.addMappingForUrlPatterns(null, false, "/*");
+			.addMappingForUrlPatterns(null, false, "/*");
 	}
 }
